@@ -62,7 +62,7 @@ namespace NetModular.Module.Elsa.Infrastructure.Repositories.SqlServer
         {
             return Db.Find()
                 .Where(a => a.DefinitionId == definitionId)
-                .OrderBy(a => a.CreatedAt)
+                .OrderByDescending(a => a.CreatedAt)
                 .ToListAsync();
         }
 

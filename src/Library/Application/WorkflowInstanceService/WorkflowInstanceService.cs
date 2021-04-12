@@ -252,13 +252,19 @@ namespace NetModular.Module.Elsa.Application.WorkflowInstanceService
             {
                 throw new Exception("更新失败");
             }
-            if (!await _activityInstanceRepository.BatchInsertAsync(entity.Activities.ToList(), uow))
+            if(entity.Activities.Any())
             {
-                throw new Exception("更新失败");
+                if (!await _activityInstanceRepository.BatchInsertAsync(entity.Activities.ToList(), uow))
+                {
+                    throw new Exception("更新失败");
+                }
             }
-            if (!await _blockingActivityRepository.BatchInsertAsync(entity.BlockingActivities.ToList(), uow))
+            if (entity.BlockingActivities.Any())
             {
-                throw new Exception("更新失败");
+                if (!await _blockingActivityRepository.BatchInsertAsync(entity.BlockingActivities.ToList(), uow))
+                {
+                    throw new Exception("更新失败");
+                }
             }
             uow.Commit();
             return entity;

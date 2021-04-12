@@ -52,7 +52,7 @@ namespace NetModular.Module.Elsa.Infrastructure.Repositories.SqlServer
                 .Select(a => a.WorkflowInstance);
             return Db.Find()
                 .Where(a => a.Status == WorkflowStatus.Executing)
-                .WhereIf(string.IsNullOrWhiteSpace(correlationId), a => a.CorrelationId == correlationId)
+                .WhereIf(!string.IsNullOrWhiteSpace(correlationId), a => a.CorrelationId == correlationId)
                 .Where(a => a.Id, QueryOperator.In, subQuery)
                 .OrderByDescending(a => a.CreatedAt)
                 .ToListAsync();
